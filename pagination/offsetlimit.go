@@ -34,9 +34,17 @@ func (ol *OffsetLimit) Next() {
 
 func (ol *OffsetLimit) Values() url.Values {
 	v := url.Values{}
-	v.Add("offset", strconv.Itoa(ol.Offset))
-	v.Add("limit", strconv.Itoa(ol.Limit))
+	v.Set("offset", strconv.Itoa(ol.Offset))
+	v.Set("limit", strconv.Itoa(ol.Limit))
 	return v
+}
+
+func (ol *OffsetLimit) Update(u *url.URL) *url.URL {
+	v := u.Query()
+	v.Set("offset", strconv.Itoa(ol.Offset))
+	v.Set("limit", strconv.Itoa(ol.Limit))
+	u.RawQuery = v.Encode()
+	return u
 }
 
 func NewOffsetLimit(limit string) OffsetLimit {

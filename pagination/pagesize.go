@@ -34,9 +34,17 @@ func (ol *PageSize) Next() {
 
 func (ol *PageSize) Values() url.Values {
 	v := url.Values{}
-	v.Add("size", strconv.Itoa(ol.Size))
-	v.Add("page", strconv.Itoa(ol.Page))
+	v.Set("size", strconv.Itoa(ol.Size))
+	v.Set("page", strconv.Itoa(ol.Page))
 	return v
+}
+
+func (ol *PageSize) Update(u *url.URL) *url.URL {
+	v := u.Query()
+	v.Set("size", strconv.Itoa(ol.Size))
+	v.Set("page", strconv.Itoa(ol.Page))
+	u.RawQuery = v.Encode()
+	return u
 }
 
 func NewPageSize(size string) PageSize {

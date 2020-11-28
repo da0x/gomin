@@ -19,9 +19,10 @@
 package pagination
 
 import "testing"
+import "net/url"
 
 func TestOffsetLimit(t *testing.T) {
-	o := OffsetLimit{0, 100}
+	o := OffsetLimit{0, 10}
 	o.Next()
 	println(o.Values().Encode())
 	o.Next()
@@ -32,6 +33,21 @@ func TestOffsetLimit(t *testing.T) {
 	println(o.Values().Encode())
 	o.Next()
 	println(o.Values().Encode())
+}
+
+func TestOffsetLimitUpdate(t *testing.T) {
+	o := OffsetLimit{0, 10}
+	u, e := url.Parse("http://golang.com")
+	if e != nil {
+		panic(e)
+	}
+	println(o.Update(u).String())
+	o.Next()
+	println(o.Update(u).String())
+	o.Next()
+	println(o.Update(u).String())
+	o.Next()
+	println(o.Update(u).String())
 }
 
 func TestPageSize(t *testing.T) {
@@ -46,4 +62,19 @@ func TestPageSize(t *testing.T) {
 	println(o.Values().Encode())
 	o.Next()
 	println(o.Values().Encode())
+}
+
+func TestPageSizeUpdate(t *testing.T) {
+	o := PageSize{0, 10}
+	u, e := url.Parse("http://golang.com/?hello=world")
+	if e != nil {
+		panic(e)
+	}
+	println(o.Update(u).String())
+	o.Next()
+	println(o.Update(u).String())
+	o.Next()
+	println(o.Update(u).String())
+	o.Next()
+	println(o.Update(u).String())
 }
