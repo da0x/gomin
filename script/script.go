@@ -47,7 +47,7 @@ func writeToFile(filename string, data string) error {
 func deleteFile(filename string) {
 	err := os.Remove(filename)
 	if err != nil {
-		log.Fatalln("script.deleteFile() failed to remove file:", filename, err)
+		log.Println("script.deleteFile() failed to remove file:", filename, err)
 	}
 }
 
@@ -69,8 +69,8 @@ func Execute(script string) {
 	if err != nil {
 		log.Fatalln("script.Execute() failed to create file:", name, err)
 	}
-	defer deleteFile(name)
 	err = execute(name)
+	deleteFile(name)
 	if err != nil {
 		log.Fatalln("script.Execute() error running:", name, err)
 	}
