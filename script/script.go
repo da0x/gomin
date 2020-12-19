@@ -1,4 +1,3 @@
-
 //
 //   script/script.go
 //   mini-go
