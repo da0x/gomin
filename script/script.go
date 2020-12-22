@@ -42,15 +42,6 @@ func writeToFile(filename string, data string) error {
 	return file.Sync()
 }
 
-// deleteFile deletes the given path from the system.
-// it will panic upon failure
-func deleteFile(filename string) {
-	err := os.Remove(filename)
-	if err != nil {
-		log.Println("script.deleteFile() failed to remove file:", filename, err)
-	}
-}
-
 func execute(filename string) error {
 	cmd := exec.Command("sh", filename)
 	cmd.Stdout = os.Stdout
@@ -68,10 +59,14 @@ func Execute(script string) {
 	err := writeToFile(name, "#!/bin/sh\nset -e\nset -o pipefail\n"+script)
 	if err != nil {
 		log.Println("script.Execute() failed to create file:", name, err)
+		return
 	}
 	err = execute(name)
-	deleteFile(name)
 	if err != nil {
 		log.Println("script.Execute() error running:", name, err)
+	}
+	err := os.Remove(name)
+	if err != nil {
+		log.Println("script.deleteFile() failed to remove file:", name, err)
 	}
 }
