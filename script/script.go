@@ -67,6 +67,6 @@ func Execute(script string) {
 	}
 	err = os.Remove(name)
 	if err != nil {
-		log.Println("script.deleteFile() failed to remove file:", name, err)
+		log.Println("script.Execute() failed to remove file:", name, err)
 	}
 }
