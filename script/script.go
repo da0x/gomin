@@ -67,11 +67,11 @@ func Execute(script string) {
 	name := uuid.New().String() + ".sh"
 	err := writeToFile(name, "#!/bin/sh\nset -e\nset -o pipefail\n"+script)
 	if err != nil {
-		log.Fatalln("script.Execute() failed to create file:", name, err)
+		log.Println("script.Execute() failed to create file:", name, err)
 	}
 	err = execute(name)
 	deleteFile(name)
 	if err != nil {
-		log.Fatalln("script.Execute() error running:", name, err)
+		log.Println("script.Execute() error running:", name, err)
 	}
 }
