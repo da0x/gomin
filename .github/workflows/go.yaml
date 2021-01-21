@@ -31,7 +31,11 @@ jobs:
         fi
 
     - name: Build Script
-      run: go build -v script
+      run: |
+        cd script
+        go build -v .
 
     - name: Test Script
-      run: go test -v script
+      run: |
+        cd script
+        go test -v .
