@@ -22,6 +22,9 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v2
 
+    - name: Mod Init
+      run: go mod init
+      
     - name: Get dependencies
       run: |
         go get -v -t -d ./...
@@ -30,8 +33,8 @@ jobs:
             dep ensure
         fi
 
-    - name: Build
-      run: go build -v .
+    - name: Build Script
+      run: go build -v script
 
-    - name: Test
-      run: go test -v .
+    - name: Test Script
+      run: go test -v script
