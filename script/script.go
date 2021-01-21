@@ -55,7 +55,7 @@ func execute(filename string) error {
 // all execution output of the script will be
 // visible in your terminal
 func Execute(script string) {
-	name := uuid.New().String() + ".sh"
+	name := os.TempDir() + "/" + uuid.New().String() + ".sh"
 	err := writeToFile(name, "#!/bin/sh\nset -e\nset -o pipefail\n"+script)
 	if err != nil {
 		log.Println("script.Execute() failed to create file:", name, err)
