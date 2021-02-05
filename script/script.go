@@ -19,9 +19,9 @@
 package script
 
 import (
+	"fmt"
 	"github.com/google/uuid"
 	"io"
-	"log"
 	"os"
 	"os/exec"
 )
@@ -54,19 +54,16 @@ func execute(filename string) error {
 // it deletes the file
 // all execution output of the script will be
 // visible in your terminal
-func Execute(script string) {
+func Execute(script string) error {
 	name := os.TempDir() + "/" + uuid.New().String() + ".sh"
 	err := writeToFile(name, "#!/bin/sh\nset -e\nset -o pipefail\n"+script)
 	if err != nil {
-		log.Println("script.Execute() failed to create file:", name, err)
-		return
+		return fmt.Errorf("script.Execute() failed to create file: %v : %v", name, err)
 	}
 	err = execute(name)
+	_ = os.Remove(name)
 	if err != nil {
-		log.Println("script.Execute() error running:", name, err)
+		return fmt.Errorf("script.Execute() error running: %v : %v", name, err)
 	}
-	err = os.Remove(name)
-	if err != nil {
-		log.Println("script.Execute() failed to remove file:", name, err)
-	}
+	return nil
 }
