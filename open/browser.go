@@ -31,7 +31,8 @@ func browser(url string) error {
 	case "darwin":
 		err = open.RunWith("open", url)
 	case "windows":
-		err = open.RunWith("cmd", "/c", "start", url)
+		cmd := "cmd /c start " + url
+		err = open.RunWith(cmd, "")
 	default:
 		err = fmt.Errorf("Unsupported platform")
 	}
