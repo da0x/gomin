@@ -25,7 +25,7 @@ import (
 	"github.com/skratchdot/open-golang/open"
 )
 
-func browser(url string) error {
+func Browser(url string) error {
 	var err error
 	switch runtime.GOOS {
 	case "darwin":
